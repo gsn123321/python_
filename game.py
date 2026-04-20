@@ -7,45 +7,58 @@ from rich.table import Table
 console = Console()
 
 def player_choice():
-    list = ['камень', 'ножницы', 'бумага']
+    ruka = ['камень', 'ножницы', 'бумага']
     while True:
         choices = input('Выбери: камень или ножницы или бумага: ')
-        if choices not in list:
+        if choices not in ruka:
             print('неверный выбор')
         else: 
             return choices   
 
 def comp_choice():
-    list = ['камень', 'ножницы', 'бумага']
-    choices = r.choice(list)
+    ruka = ['камень', 'ножницы', 'бумага']
+    choices = r.choice(ruka)
     return choices
 
+raund = 1
+
 def game():
-    raund = 0
+    global raund
     player = player_choice()
     random = comp_choice()
     print('Игрок', player)    
     print('Комп', random)
 
-    try:
-        with open('file.txt', 'r', encoding='utf-8') as f:
-            raund = len(f.readlines()) + 1
-    except FileNotFoundError:
-        raund = 1
     
     if player == random:
         console.print('Ничья', style='yellow')
-        raund +=1
         result = 'ничья'
     elif player == 'камень' and random == 'ножницы' or player == "ножницы" and random == "бумага" or player == "бумага" and random == "камень":
         console.print('Выйграл', style='green')
-        raund+=1
         result = 'победа'
     else:
         console.print('Проиграл', style='red')
-        raund+=1
         result = 'поражение'  
     save(result, player, random, raund)
+    raund+=1
+
+def stats():
+    win = 0
+    lose = 0
+    draw = 0
+
+    with open('file.txt', 'r', encoding='utf-8') as file:
+        for line in file:
+            result = line.strip()
+            result = result.split(', ')[3]
+
+            if result == 'победа':
+                wins+=1
+            elif result == 'поражение':
+                lose+=1
+            elif result == 'ничья':
+                draw+=1
+    console.print(Panel(f'Победы: {win}, Поражения: {lose}, Ничьи: {draw}', title="Статистика", style='bold blue'))
 
 
 def save(result, player, random,raund):
@@ -82,7 +95,7 @@ while True:
         elif choice == '2':
             show()
         elif choice == '3':
-            print('')
+            stats()
         elif choice == '4':
             break
             
