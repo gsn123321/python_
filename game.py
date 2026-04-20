@@ -7,13 +7,8 @@ from rich.table import Table
 console = Console()
 
 def player_choice():
-    ruka = ['камень', 'ножницы', 'бумага']
-    while True:
-        choices = input('Выбери: камень или ножницы или бумага: ')
-        if choices not in ruka:
-            print('неверный выбор')
-        else: 
-            return choices   
+    choices = Prompt.ask("Выбери действие", choices=["камень", "ножницы", "бумага"])
+    return choices   
 
 def comp_choice():
     ruka = ['камень', 'ножницы', 'бумага']
