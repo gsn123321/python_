@@ -40,7 +40,7 @@ def game():
         console.print('Проиграл', style='red')
         result = 'поражение'  
     save(result, player, random, raund)
-    raund+=1
+    raund += 1
 
 def stats():
     win = 0
@@ -49,15 +49,14 @@ def stats():
 
     with open('file.txt', 'r', encoding='utf-8') as file:
         for line in file:
-            result = line.strip()
-            result = result.split(', ')[3]
+            result = line.strip().split(', ')[2]
 
             if result == 'победа':
-                wins+=1
+                win += 1
             elif result == 'поражение':
-                lose+=1
+                lose += 1
             elif result == 'ничья':
-                draw+=1
+                draw += 1
     console.print(Panel(f'Победы: {win}, Поражения: {lose}, Ничьи: {draw}', title="Статистика", style='bold blue'))
 
 
