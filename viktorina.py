@@ -108,7 +108,7 @@ def play():
         if len(choice) > 1:
             if choice == word:
                 print('Ви виграли')
-                save_history(True, word)
+                history(True, word)
                 return
             else:
                 print('Неправильно')
@@ -132,15 +132,15 @@ def play():
         draw_hangman(tries)
 
         if '_' not in hidden:
-            print('Ти виграв, слово:', word)
-            save_history(True, word)
+            print('Ви програли, слово:', word)
+            history(True, word)
             return
 
-    print('Ти програв, cлово:', word)
-    save_history(False, word)
+    print('Ви програли, cлово:', word)
+    history(False, word)
 
-def save_history(win, word):
-    with open('history.txt', 'a', encoding='utf-8') as file:
+def history(win, word):
+    with open('stats.txt', 'a', encoding='utf-8') as file:
         if win:
             file.write(f'Перемога | слово: {word}\n')
         else:
@@ -149,7 +149,7 @@ def save_history(win, word):
 
 def stats():
     try:
-        with open('history.txt', 'r', encoding='utf-8') as file:
+        with open('stats.txt', 'r', encoding='utf-8') as file:
             print('Історія ігор:')
             print(file.read())
     except:
